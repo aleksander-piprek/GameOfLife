@@ -27,6 +27,13 @@ void Game::run()
 
 void Game::conway(Window& window)
 {
+    // for(auto& rectangle : rectangles)
+    // {
+    //     rectangle.calculateCellNeighbours();
+    //     rectangle.getCellState(rectangle.neighbours);
+    //     rectangle.setCell();
+    // }
+
     Rectangle rect(currentPositionX, currentPositionY, 10, 10);
     if(currentPositionX >= maxPositionX)
     {

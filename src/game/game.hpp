@@ -12,7 +12,6 @@ class Game
     public:
         Game();
         void run();
-
 };
 
 #endif //GAME_HPP
