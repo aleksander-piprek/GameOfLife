@@ -9,6 +9,8 @@ class Window
     const int screenWidth = 800;
     const int screenHeight = 600;    
  
+    void addGrid();
+
     public:
         Window(const std::string& windowName);
 
@@ -18,7 +20,7 @@ class Window
         void displayContents();
 
         inline const bool isOpen() { return window.isOpen(); } 
-
+    
 };
 
 #endif
