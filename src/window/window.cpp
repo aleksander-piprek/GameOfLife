@@ -20,22 +20,17 @@ void Window::update()
     }
 }
 
-void Window::beginDraw()
+void Window::clearContents()
 {
     window.clear(sf::Color::Black);
 }
 
-void Window::draw(const sf::Drawable& drawable)
+void Window::setDrawableContents(const sf::Drawable& drawable)
 {
     window.draw(drawable);
 }
 
-void Window::endDraw()
+void Window::displayContents()
 {
     window.display();   
-}
-
-bool Window::isOpen() const
-{
-    return window.isOpen();
 }
