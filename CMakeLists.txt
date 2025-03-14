@@ -4,6 +4,7 @@ project(GameOfLife)
 find_package(SFML 2.5 COMPONENTS graphics audio system REQUIRED)
 
 set(SOURCES "main.cpp"
+            "src/game/game.cpp"
             "src/window/window.cpp"
             "src/rectangle/rectangle.cpp")
 
