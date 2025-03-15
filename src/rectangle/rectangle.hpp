@@ -2,6 +2,7 @@
 #define RECTANGLE_HPP
 
 #include <SFML/Graphics.hpp>
+#include "../window/window.hpp"
 
 class Rectangle
 {
@@ -10,6 +11,7 @@ class Rectangle
 
         inline const sf::RectangleShape& getRectangle() { return rect; }
 
+        void calculateConway();
         enum class State
         {
             Null,
@@ -20,12 +22,13 @@ class Rectangle
         };  
 
     private:
-        sf::RectangleShape rect;
-        int neighbours = 0;
-
         int calculateCellNeighbours();
-        State getCellState(const int& neighbours);
-        void setCell();
+        Rectangle::State getCellState(const int& neighbours);
+        void setCell(Rectangle::State state);        
+
+        sf::RectangleShape rect;
+        int neighbours = 0;        
+        Rectangle::State state;
 };
 
 #endif //RECTANGLE_HPP

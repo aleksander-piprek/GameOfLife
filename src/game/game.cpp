@@ -1,13 +1,15 @@
 #include "game.hpp"
+#include <iostream>
 
 int currentPositionX = 0;
 int currentPositionY = 0;
 
-int maxPositionX = 790;
-int maxPositionY = 590;
+int maxPositionX = Window::screenWidth - 10;
+int maxPositionY = Window::screenHeight - 10;
 
 Game::Game()
 {
+    setInitialRectangles();
 }
 
 void Game::run()
@@ -20,28 +22,23 @@ void Game::run()
         window.clearContents();
 
         conway(window);
-
         window.displayContents();
     }
 }
 
 void Game::conway(Window& window)
 {
-    // for(auto& rectangle : rectangles)
-    // {
-    //     rectangle.calculateCellNeighbours();
-    //     rectangle.getCellState(rectangle.neighbours);
-    //     rectangle.setCell();
-    // }
-
-    Rectangle rect(currentPositionX, currentPositionY, 10, 10);
-    if(currentPositionX >= maxPositionX)
+    for(auto& rectangle : rectanglesVector)
     {
-        currentPositionX = 0;
-        currentPositionY+=10;    
-    }
-    
-    window.setDrawableContents(rect.getRectangle());
-    sf::sleep(sf::milliseconds(10));
-    currentPositionX+=10;
+        rectangle.calculateConway();
+
+        window.setDrawableContents(rectangle.getRectangle());
+    }    
+}
+
+void Game::setInitialRectangles()
+{
+    rectanglesVector.push_back(Rectangle(100, 100, 10, 10));
+    rectanglesVector.push_back(Rectangle(110, 100, 10, 10));
+    rectanglesVector.push_back(Rectangle(120, 100, 10, 10));
 }

@@ -1,14 +1,25 @@
 #include "rectangle.hpp"
 
+#include <iostream>
+
 Rectangle::Rectangle(int X, int Y, int Width, int Height)
 {
     rect.setSize(sf::Vector2f(Width, Height));
     rect.setPosition(X, Y);
+    rect.setFillColor(sf::Color::Yellow);
+    rect.setOutlineColor(sf::Color(75, 75, 75));
+    rect.setOutlineThickness(1);
+}
+
+void Rectangle::calculateConway()
+{
+    neighbours = calculateCellNeighbours();
+    state = getCellState(neighbours);
+    setCell(state);
 }
 
 int Rectangle::calculateCellNeighbours()
 {
-    neighbours = 0;
     return neighbours;
 }
 
@@ -31,7 +42,7 @@ Rectangle::State Rectangle::getCellState(const int& neighbours)
     }
 }
 
-void Rectangle::setCell()
+void Rectangle::setCell(Rectangle::State state)
 {
     
 }

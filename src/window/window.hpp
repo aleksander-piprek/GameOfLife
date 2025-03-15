@@ -4,13 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 class Window
-{
-    sf::RenderWindow window;
-    const int screenWidth = 800;
-    const int screenHeight = 600;    
- 
-    void addGrid();
-
+{ 
     public:
         Window(const std::string& windowName);
 
@@ -20,7 +14,15 @@ class Window
         void displayContents();
 
         inline const bool isOpen() { return window.isOpen(); } 
-    
+
+        // 1 is added to the widths so that the grid is visible on the bottom and right edges (purely cosmetic purpose)
+        static const int screenWidth = 1281;
+        static const int screenHeight = 721;    
+
+    private:
+        void addGrid();
+
+        sf::RenderWindow window;
 };
 
 #endif

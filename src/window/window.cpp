@@ -1,7 +1,7 @@
 #include "window.hpp"
 
 Window::Window(const std::string& windowName)
-    : window(sf::VideoMode(800, 600), 
+    : window(sf::VideoMode((uint)screenWidth, (uint)screenHeight),   
       windowName, 
       sf::Style::Titlebar)
 {
@@ -57,10 +57,10 @@ void Window::displayContents()
 
 void Window::addGrid()
 {
-    sf::Color color(100, 100, 100);
+    sf::Color color(75, 75, 75);
     for(int x = 0; x < screenWidth; x += 10)
     {
-        sf::RectangleShape line(sf::Vector2f(1, screenWidth));
+        sf::RectangleShape line(sf::Vector2f(1, screenHeight));
         line.setPosition(x, 0);
         line.setFillColor(color);
         window.draw(line);
