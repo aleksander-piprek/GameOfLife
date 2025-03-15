@@ -1,15 +1,10 @@
 #include "game.hpp"
 #include <iostream>
 
-int currentPositionX = 0;
-int currentPositionY = 0;
-
-int maxPositionX = Window::screenWidth - 10;
-int maxPositionY = Window::screenHeight - 10;
-
 Game::Game()
 {
     setInitialRectangles();
+    setInitialRectanglesBoolMap();
 }
 
 void Game::run()
@@ -38,7 +33,26 @@ void Game::conway(Window& window)
 
 void Game::setInitialRectangles()
 {
-    rectanglesVector.push_back(Rectangle(100, 100, 10, 10));
-    rectanglesVector.push_back(Rectangle(110, 100, 10, 10));
-    rectanglesVector.push_back(Rectangle(120, 100, 10, 10));
+    rectanglesVector.push_back(Rectangle(3, 3));
+    rectanglesVector.push_back(Rectangle(4, 3));
+    rectanglesVector.push_back(Rectangle(5, 3));
+}
+
+void Game::setInitialRectanglesBoolMap()
+{
+    for(int y = 0; y < gridY; y++)
+    {
+        for(int x = 0; x < gridX; x++)
+        {
+            rectanglesGridBoolMap[{x, y}] = false;
+        }
+    }
+
+    for(auto& rectangle : rectanglesVector)
+    {
+        int x = rectangle.getCellPositionOnGrid().x;
+        int y = rectangle.getCellPositionOnGrid().y;
+
+        rectanglesGridBoolMap[{x, y}] = true;
+    }
 }

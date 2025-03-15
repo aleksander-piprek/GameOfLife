@@ -5,6 +5,7 @@
 #include "../rectangle/rectangle.hpp"
 
 #include <vector>
+#include <map>
 
 class Game
 {
@@ -13,10 +14,15 @@ class Game
         void run();        
 
         std::vector<Rectangle> rectanglesVector;
+        std::map<std::pair<int, int>, bool> rectanglesGridBoolMap;
 
     private:
         void setInitialRectangles();
+        void setInitialRectanglesBoolMap();
         void conway(Window& window);
+
+        int gridX = Window::screenWidth / 10;
+        int gridY = Window::screenHeight / 10;
 };
 
 #endif //GAME_HPP

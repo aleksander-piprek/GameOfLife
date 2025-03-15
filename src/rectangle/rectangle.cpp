@@ -2,10 +2,10 @@
 
 #include <iostream>
 
-Rectangle::Rectangle(int X, int Y, int Width, int Height)
+Rectangle::Rectangle(int gridX, int gridY)
 {
-    rect.setSize(sf::Vector2f(Width, Height));
-    rect.setPosition(X, Y);
+    rect.setSize(sf::Vector2f(10, 10));
+    rect.setPosition(gridX * 10, gridY * 10);
     rect.setFillColor(sf::Color::Yellow);
     rect.setOutlineColor(sf::Color(75, 75, 75));
     rect.setOutlineThickness(1);
