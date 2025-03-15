@@ -17,9 +17,13 @@ class Game
         std::map<std::pair<int, int>, bool> cellGridBoolMap;
 
     private:
-        void setInitialRectangles();
-        void setInitialRectanglesBoolMap();
+        void setInitialCells();
+        void setInitialCellsMap();
         void conway(Window& window);
+        void calculateConway(Cell& cell);
+        int calculateCellNeighbours(Cell& cell);
+        Cell::State getCellState(const int& neighbours);
+        void setCell(Cell::State state);              
 
         int gridX = Window::screenWidth / 10;
         int gridY = Window::screenHeight / 10;
