@@ -1,5 +1,5 @@
-#ifndef RECTANGLE_HPP
-#define RECTANGLE_HPP
+#ifndef CELL_HPP
+#define CELL_HPP
 
 #include <SFML/Graphics.hpp>
 
@@ -35,4 +35,4 @@ class Cell
         Cell::State state;
 };
 
-#endif //RECTANGLE_HPP
+#endif //CELL_HPP
