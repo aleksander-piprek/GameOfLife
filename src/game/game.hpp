@@ -2,7 +2,7 @@
 #define GAME_HPP
 
 #include "../window/window.hpp"
-#include "../rectangle/rectangle.hpp"
+#include "../cell/cell.hpp"
 
 #include <vector>
 #include <map>
@@ -13,7 +13,7 @@ class Game
         Game();
         void run();        
 
-        std::vector<Rectangle> rectanglesVector;
+        std::vector<Cell> rectanglesVector;
         std::map<std::pair<int, int>, bool> rectanglesGridBoolMap;
 
     private:
