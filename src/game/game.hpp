@@ -20,13 +20,17 @@ class Game
         void setInitialCells();
         void setInitialCellsMap();
         void conway(Window& window);
-        void calculateConway(Cell& cell);
-        int calculateCellNeighbours(Cell& cell);
-        Cell::State getCellState(const int& neighbours);
-        void setCell(Cell::State state);              
+
+        void calculateConwayForAliveCells(Cell& cell);
+        void calculateConwayForSurroundingDeadCells(Cell& cell);
+        void breedOrKillCells();
+        
+        int calculateAliveCellNeighbours(Cell& cell);
+        Cell::State getAliveCellState(Cell& cell);
 
         int gridX = Window::screenWidth / 10;
         int gridY = Window::screenHeight / 10;
+        uint generation = 0;
 };
 
 #endif //GAME_HPP

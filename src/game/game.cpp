@@ -23,12 +23,29 @@ void Game::run()
 
 void Game::conway(Window& window)
 {
+    // Draw cells from current generation
     for(auto& cell : cellVector)
     {
-        calculateConway(cell);
-
-        window.setDrawableContents(cell.getRectangle());
+        window.setDrawableContents(cell.getRectangle());        
     }    
+
+    sf::sleep(sf::milliseconds(100));
+    generation++;
+    std::cout << "Generation: " << generation << std::endl;
+
+    // Calculate alive cells for next generation
+    for(auto& cell : cellVector)
+    {
+        calculateConwayForAliveCells(cell);
+    }
+
+    // Calculate dead cells to be bred for next generation
+    for(auto& cell : cellVector)
+    {
+        calculateConwayForSurroundingDeadCells(cell);
+    }
+
+    breedOrKillCells();
 }
 
 void Game::setInitialCells()
@@ -36,6 +53,8 @@ void Game::setInitialCells()
     cellVector.push_back(Cell(3, 3));
     cellVector.push_back(Cell(4, 3));
     cellVector.push_back(Cell(5, 3));
+    cellVector.push_back(Cell(5, 2));
+    cellVector.push_back(Cell(4, 1));
 }
 
 void Game::setInitialCellsMap()
@@ -57,40 +76,95 @@ void Game::setInitialCellsMap()
     }
 }
 
-void Game::calculateConway(Cell& cell)
+void Game::calculateConwayForAliveCells(Cell& cell)
 {
-    cell.neighbours = calculateCellNeighbours(cell);
-    cell.state = getCellState(cell.neighbours);
-    setCell(cell.state);
+    cell.neighbours = calculateAliveCellNeighbours(cell);
+    cell.state = getAliveCellState(cell);
 }
 
-int Game::calculateCellNeighbours(Cell& cell)
+void Game::calculateConwayForSurroundingDeadCells(Cell& cell)
 {
-    std::cout << "Position: " << cell.getCellPosition().x << ", " << cell.getCellPosition().y << std::endl;
+    Cell newCell;
+    for(int y = cell.getCellPosition().y - 1; y <= cell.getCellPosition().y + 1; y++)
+    {
+        for(int x = cell.getCellPosition().x - 1; x <= cell.getCellPosition().x + 1; x++)
+        {
+            if(!cellGridBoolMap[{x, y}])
+            {
+                newCell = Cell(x, y);
+                calculateAliveCellNeighbours(newCell);
+                if(newCell.neighbours == 3)
+                {
+                    newCell.state = Cell::State::Breed;
+                    
+                    // Search of existing cell in cellVector
+                    auto it = std::find_if(cellVector.begin(), cellVector.end(), 
+                        [&newCell](Cell& c) { return c.getCellPosition() == newCell.getCellPosition(); });
+                    if(it == cellVector.end())  // If cell is not found, add it to cellVector
+                        cellVector.push_back(newCell);
 
+                }
+            }
+        }
+    }
+
+}
+
+int Game::calculateAliveCellNeighbours(Cell& cell)
+{
+    cell.neighbours = 0;
+    for(int y = cell.getCellPosition().y - 1; y <= cell.getCellPosition().y + 1; y++)
+    {
+        for(int x = cell.getCellPosition().x - 1; x <= cell.getCellPosition().x + 1; x++)
+        {
+            if(cellGridBoolMap[{x, y}] && !(x == cell.getCellPosition().x && y == cell.getCellPosition().y))
+            {
+                cell.neighbours++;
+            }
+        }
+    }
     return cell.neighbours;
 }
 
-Cell::State Game::getCellState(const int& neighbours)
+Cell::State Game::getAliveCellState(Cell& cell)
 {
-    switch(neighbours)
+    if(cell.neighbours < 2 || cell.neighbours > 3)
     {
-        case 0:
-            return Cell::State::Null;
-        case 1:
-            return Cell::State::Dead;
-        case 2:
-            return Cell::State::Alive;
-        case 3:
-            return Cell::State::Reproduce;
-        case 4:
-            return Cell::State::Overpopulated;
-        default:
-            return Cell::State::Null;
+        return Cell::State::Kill;
+    }
+    else if(cell.neighbours == 2 || cell.neighbours == 3)
+    {
+        return Cell::State::Survive;
+    }
+    else
+    {
+        return Cell::State::Null;
     }
 }
 
-void Game::setCell(Cell::State state)
+void Game::breedOrKillCells()
 {
-    
+    for(auto it = cellVector.begin(); it != cellVector.end();)
+    {
+        switch(it->state)
+        {
+            case Cell::State::Survive:
+                cellGridBoolMap[{it->getCellPosition().x, it->getCellPosition().y}] = true;
+                it->state = Cell::State::Null;
+                ++it;
+                break;
+            case Cell::State::Breed:
+                cellGridBoolMap[{it->getCellPosition().x, it->getCellPosition().y}] = true;
+                it->state = Cell::State::Null;
+                ++it;
+                break;
+            case Cell::State::Kill:
+                cellGridBoolMap[{it->getCellPosition().x, it->getCellPosition().y}] = false;
+                it = cellVector.erase(it);
+                break;                
+            default:
+                ++it;
+                break;    
+        }
+    }
 }
