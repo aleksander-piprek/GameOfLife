@@ -23,7 +23,7 @@ void Game::run()
 
 void Game::conway(Window& window)
 {
-    for(auto& cell : rectanglesVector)
+    for(auto& cell : cellVector)
     {
         cell.calculateConway();
 
@@ -33,9 +33,9 @@ void Game::conway(Window& window)
 
 void Game::setInitialRectangles()
 {
-    rectanglesVector.push_back(Cell(3, 3));
-    rectanglesVector.push_back(Cell(4, 3));
-    rectanglesVector.push_back(Cell(5, 3));
+    cellVector.push_back(Cell(3, 3));
+    cellVector.push_back(Cell(4, 3));
+    cellVector.push_back(Cell(5, 3));
 }
 
 void Game::setInitialRectanglesBoolMap()
@@ -44,15 +44,15 @@ void Game::setInitialRectanglesBoolMap()
     {
         for(int x = 0; x < gridX; x++)
         {
-            rectanglesGridBoolMap[{x, y}] = false;
+            cellGridBoolMap[{x, y}] = false;
         }
     }
 
-    for(auto& cell : rectanglesVector)
+    for(auto& cell : cellVector)
     {
         int x = cell.getCellPositionOnGrid().x;
         int y = cell.getCellPositionOnGrid().y;
 
-        rectanglesGridBoolMap[{x, y}] = true;
+        cellGridBoolMap[{x, y}] = true;
     }
 }

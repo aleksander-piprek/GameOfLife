@@ -13,8 +13,8 @@ class Game
         Game();
         void run();        
 
-        std::vector<Cell> rectanglesVector;
-        std::map<std::pair<int, int>, bool> rectanglesGridBoolMap;
+        std::vector<Cell> cellVector;
+        std::map<std::pair<int, int>, bool> cellGridBoolMap;
 
     private:
         void setInitialRectangles();
