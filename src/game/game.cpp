@@ -1,5 +1,8 @@
 #include "game.hpp"
+
 #include <iostream>
+#include <fstream>
+#include <nlohmann/json.hpp>
 
 Game::Game()
 {
@@ -29,7 +32,7 @@ void Game::conway(Window& window)
         window.setDrawableContents(cell.getRectangle());        
     }    
 
-    sf::sleep(sf::milliseconds(100));
+    sf::sleep(sf::milliseconds(20));
     generation++;
     std::cout << "Generation: " << generation << std::endl;
 
@@ -50,11 +53,15 @@ void Game::conway(Window& window)
 
 void Game::setInitialCells()
 {
-    cellVector.push_back(Cell(3, 3));
-    cellVector.push_back(Cell(4, 3));
-    cellVector.push_back(Cell(5, 3));
-    cellVector.push_back(Cell(5, 2));
-    cellVector.push_back(Cell(4, 1));
+    std::ifstream file("../scenarios/glider_gun.json");
+    
+    nlohmann::json j;
+    file >> j;
+
+    for(auto& cell : j["cells"])
+    {
+        cellVector.push_back(Cell(cell["x"], cell["y"]));
+    }
 }
 
 void Game::setInitialCellsMap()
@@ -97,10 +104,10 @@ void Game::calculateConwayForSurroundingDeadCells(Cell& cell)
                 {
                     newCell.state = Cell::State::Breed;
                     
-                    // Search of existing cell in cellVector
                     auto it = std::find_if(cellVector.begin(), cellVector.end(), 
                         [&newCell](Cell& c) { return c.getCellPosition() == newCell.getCellPosition(); });
-                    if(it == cellVector.end())  // If cell is not found, add it to cellVector
+                    
+                    if(it == cellVector.end())  
                         cellVector.push_back(newCell);
 
                 }
