@@ -17,19 +17,17 @@ class Game
     private:
         void setInitialCells(const std::string& scenarioPath);
         void setInitialCellsMap();
-        void conway(Window& window);
+        void conway();
 
-        void calculateConwayForAliveCells(Cell& cell);
+        uint calculateAliveCellNeighbours(Cell& cell);
+        Cell::State getAliveCellState(Cell& cell);
         void calculateConwayForSurroundingDeadCells(Cell& cell);
         void breedOrKillCells();
         
-        int calculateAliveCellNeighbours(Cell& cell);
-        Cell::State getAliveCellState(Cell& cell);
-
         std::vector<Cell> cellVector;
         std::map<std::pair<int, int>, bool> cellGridBoolMap;
-        int gridX = Window::screenWidth / 10;
-        int gridY = Window::screenHeight / 10;
+        uint gridX = Window::screenWidth / 10;
+        uint gridY = Window::screenHeight / 10;
         uint generation = 0;
 };
 
