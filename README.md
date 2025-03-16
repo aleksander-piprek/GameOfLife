@@ -7,4 +7,4 @@ For now user can create initial points in the function:
 * **Space** to stop the simulation
 
 ## Preview
-![conway](https://github.com/user-attachments/assets/3358b744-29a9-4408-b495-e2b42ee594d0)
+![conway](https://github.com/user-attachments/assets/084f9468-f42e-4a2e-9522-62fe403bd29d)
