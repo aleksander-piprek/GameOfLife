@@ -3,10 +3,11 @@
 #include <iostream>
 #include <fstream>
 #include <nlohmann/json.hpp>
+#include <string>
 
-Game::Game()
+Game::Game(const std::string& scenarioPath)
 {
-    setInitialCells();
+    setInitialCells(scenarioPath);
     setInitialCellsMap();
 }
 
@@ -51,9 +52,9 @@ void Game::conway(Window& window)
     breedOrKillCells();
 }
 
-void Game::setInitialCells()
+void Game::setInitialCells(const std::string& scenarioPath)
 {
-    std::ifstream file("../scenarios/glider_gun.json");
+    std::ifstream file(scenarioPath);
     
     nlohmann::json j;
     file >> j;

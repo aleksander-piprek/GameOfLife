@@ -2,7 +2,7 @@
 
 int main()
 {
-    Game game;
+    Game game("../scenarios/glider_gun.json");
     game.run();
 
     return 0;
