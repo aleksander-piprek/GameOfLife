@@ -16,6 +16,8 @@ void Game::run()
 
     while(window.isOpen())
     {
+        window.restartClock();
+
         window.update();
 
         window.clearContents();
@@ -25,13 +27,11 @@ void Game::run()
             window.setDrawableContents(cell.getRectangle());
         }    
 
-        sf::sleep(sf::milliseconds(20));
-        generation++;
-        std::cout << "Generation: " << generation << std::endl;
-
         window.displayContents();
 
         conway();
+
+        updateGameInfo(window);
     }
 }
 
@@ -146,7 +146,6 @@ void Game::setInitialCells(const std::string& scenarioPath)
     
     nlohmann::json j;
     file >> j;
-
     for(auto& cell : j["cells"])
     {
         cellVector.push_back(Cell(cell["x"], cell["y"]));
@@ -155,9 +154,9 @@ void Game::setInitialCells(const std::string& scenarioPath)
 
 void Game::setInitialCellsMap()
 {
-    for(int y = 0; y < gridY; y++)
+    for(int y = 0; y < gridYSize; y++)
     {
-        for(int x = 0; x < gridX; x++)
+        for(int x = 0; x < gridXSize; x++)
         {
             cellGridBoolMap[{x, y}] = false;
         }
@@ -170,4 +169,13 @@ void Game::setInitialCellsMap()
 
         cellGridBoolMap[{x, y}] = true;
     }
+}
+
+void Game::updateGameInfo(Window& window)
+{
+    generation++;
+    auto fps = 1000 / window.getClock().getElapsedTime().asMilliseconds();
+    totalFPS += fps;
+    averageFPS = totalFPS / generation;
+    window.setGameInformation(generation, averageFPS);
 }
